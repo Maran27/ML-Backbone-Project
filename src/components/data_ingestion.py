@@ -9,6 +9,9 @@ import pandas as pd
 from sklearn.model_selection import train_test_split
 from dataclasses import dataclass #used to create the class variables
 
+from src.components.model_trainer import ModelTrainer
+from src.components.model_trainer import ModelTrainerConfig
+
 @dataclass #directly define the class variable
 class DataIngestionConfig: #any data / inputs required are probabaly given through this
     train_data_path: str = os.path.join('artifacts',"train.csv")
@@ -43,4 +46,7 @@ if __name__=="__main__":
     train_data,test_data=obj.initiate_data_ingestion()
 
     data_transformation=DataTransformation()
-    data_transformation.initiate_data_transformation(train_data,test_data)
+    train_arr, test_arr,_ = data_transformation.initiate_data_transformation(train_data,test_data)
+
+    modeltrainer=ModelTrainer()
+    print(modeltrainer.initiate_model_trainer(train_arr,test_arr))
